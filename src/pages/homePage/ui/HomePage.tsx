@@ -3,6 +3,7 @@
 // import { getCategories } from "../../store/categorySlice";
 // import Categories from "./Categories";
 // import { useAppDispatch } from "../../hooks/hooks";
+import { Categories } from "@widgets/categories";
 
 export default function HomePage() {
     // const dispatch = useAppDispatch();
@@ -12,6 +13,6 @@ export default function HomePage() {
     //     dispatch(getCategories());
     // }, [dispatch]);
 
-    return <>HomePage</>
-    // <Categories />;
+    return <Categories />;
+    // <>HomePage</>
 }

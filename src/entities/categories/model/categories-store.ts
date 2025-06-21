@@ -4,11 +4,10 @@ import { data } from "@shared/lib";
 import { InitialCategoryState } from "./types";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { createSelectors } from "@/shared/lib/createSelectors";
 
 interface IActions {
     getCategories: () => void;
-    getTenPopularCategories: ()=> void;
+    getTenPopularCategories: () => void;
 }
 
 const initialState: InitialCategoryState = {
@@ -22,7 +21,14 @@ const initialState: InitialCategoryState = {
 
 interface CategoryState extends InitialCategoryState, IActions {}
 
-const categoriesStore: StateCreator<CategoryState, [["zustand/immer", never], ["zustand/persist", unknown], ["zustand/devtools", never]]> = (set) => ({
+type CategoryCreator = StateCreator<
+    CategoryState,
+    [["zustand/immer", never], ["zustand/persist", unknown], ["zustand/devtools", unknown]],
+    [],
+    CategoryState
+>;
+
+const categoriesStore: CategoryCreator = (set) => ({
     ...initialState,
     getCategories: () =>
         set(
@@ -62,30 +68,25 @@ const categoriesStore: StateCreator<CategoryState, [["zustand/immer", never], ["
                     }
                 }
             },
-
             false,
             "getPopularCategories"
         ),
 });
 
-export const useCategoriesStore = createSelectors(
-    create<CategoryState>()(
-        devtools(
-            persist(immer(categoriesStore), {
-                name: "category-storage",
-                storage: createJSONStorage(() => localStorage),
-                partialize: (state) => ({ categoryList: state.categoryList }),
-            }),
-            {
-                store: "categoryStore",
-            }
-        )
+export const useCategoriesStore = create<CategoryState>()(
+    devtools(
+        persist(immer(categoriesStore), {
+            name: "category-storage",
+            storage: createJSONStorage(() => localStorage),
+            // partialize: (state) => ({ categoryList: state.categoryList }),
+        }),
+        {
+            store: "categoryStore",
+        }
     )
 );
 
 //селекторы:
 
-export const allCategories = () => useCategoriesStore((state) => state.categoryList);
+// export const useAllCategories = () => useCategoriesStore((state) => state.categoryList);
 export const getAllCategories = useCategoriesStore.getState().getCategories;
-
-

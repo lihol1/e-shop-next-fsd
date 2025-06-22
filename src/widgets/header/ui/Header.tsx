@@ -12,8 +12,12 @@ import { faArrowRightFromBracket, faCartShopping, faHouse, faMagnifyingGlass, fa
 import { useCallback } from "react";
 // import { removeUser } from "../store/userSlice";
 import { useRouter } from 'next/navigation';
+import { useCartStore } from "@/entities/cart";
+import { useModalStore } from "@/shared/model";
 
 export default function Header() {
+    const { changeCartStatus } = useCartStore(state=> state)
+    const { setModalIsOpen } = useModalStore(state=> state)
     // const { catalogIsOpen, headerSearchValue } = useAppSelector((state) => state.general);
     // const { currentUser } = useAppSelector((state) => state.user);
     const router = useRouter();
@@ -44,8 +48,8 @@ export default function Header() {
     }, []);
 
     const cartClickHandler = useCallback(() => {
-        // dispatch(setModalIsOpen(true));
-        // dispatch(changeCartStatus(true));
+        setModalIsOpen(true);
+        changeCartStatus(true);
     // }, [dispatch, setModalIsOpen, changeCartStatus]);
     }, []);
 

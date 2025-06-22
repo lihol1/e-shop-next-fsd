@@ -1,24 +1,24 @@
+"use client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Product } from "@/entities/product/model";
+// import { Product } from "@/entities/product/model";
 import { faRubleSign, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch } from "../../hooks/hooks";
-import { addItemToCart, removeItemFromCart } from "../../store/cartSlice";
-import formatter from "../../common/formatter";
-import { memo } from 'react';
+import { formatter } from "@shared/lib";
+import { memo } from "react";
+import { useCartStore } from "@entities/cart";
 
 type CartItemProps = {
     prod: Product;
 };
 
-const CartItem = memo(({ prod }: CartItemProps) => {
-    const dispatch = useAppDispatch();
+function CartItemComponent ({ prod }: CartItemProps) {
+    const {addItemToCart, removeItemFromCart} = useCartStore(state=>state)
 
     function changeQuantity(item: Product, quantity: number) {
-        dispatch(addItemToCart({ ...item, quantity }));
+        addItemToCart({ ...item, quantity });
     }
 
     function removeItem(id: number) {
-        dispatch(removeItemFromCart(id));
+       removeItemFromCart(id);
     }
 
     function divideStr(num: number) {
@@ -32,17 +32,24 @@ const CartItem = memo(({ prod }: CartItemProps) => {
             <div className="my-modal__description">{prod.name[0].toUpperCase() + prod.name.slice(1)}</div>
 
             <div className="my-modal__quantity">
-                <div className="my-modal__btn my-modal__btn--minus" onClick={() => changeQuantity(prod, Math.max(1, (prod.quantity ?? 0) - 1))}>
+                <div
+                    className="my-modal__btn my-modal__btn--minus"
+                    onClick={() => changeQuantity(prod, Math.max(1, (prod.quantity ?? 0) - 1))}
+                >
                     -
                 </div>
                 <span>{prod.quantity}</span>
-                <div className="my-modal__btn my-modal__btn--plus" onClick={() => changeQuantity(prod, Math.max(1, (prod.quantity ?? 0) + 1))}>
+                <div
+                    className="my-modal__btn my-modal__btn--plus"
+                    onClick={() => changeQuantity(prod, Math.max(1, (prod.quantity ?? 0) + 1))}
+                >
                     +
                 </div>
             </div>
 
             <div className="my-modal__price">
-                {divideStr(prod.price * (prod.quantity ?? 1))} <FontAwesomeIcon icon={faRubleSign} className="my-modal__currency" />
+                {divideStr(prod.price * (prod.quantity ?? 1))}{" "}
+                <FontAwesomeIcon icon={faRubleSign} className="my-modal__currency" />
             </div>
 
             <div className="my-modal__btn-block">
@@ -52,6 +59,7 @@ const CartItem = memo(({ prod }: CartItemProps) => {
             </div>
         </>
     );
-});
+};
 
+const CartItem = memo(CartItemComponent);
 export default CartItem;

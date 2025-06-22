@@ -1,11 +1,11 @@
 "use client";
 
 import "./categories.scss";
-import { List } from "@shared/ui/List";
-import { CategoriesItem } from "@entities/categories";
-import { Category } from "@entities/categories/model/types";
+import { List } from "@shared/ui";
+import { CategoriesItem } from "@entities/category";
+import { Category } from "@entities/category";
 import { useEffect } from "react";
-import { getAllCategories, useCategoriesStore } from "@/entities/categories/model/categories-store";
+import { getAllCategories, useCategoriesStore } from "@/entities/category";
 
 export default function Categories() {
     const { renderList, getTenPopularCategories } = useCategoriesStore((state) => state);

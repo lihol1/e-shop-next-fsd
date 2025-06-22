@@ -29,6 +29,6 @@ const modalStore: ModalStoreCreator = (set) => ({
     }, false, "setModalIsOpen"),
 });
 
-export const useModal = create<ModalStore>()(
+export const useModalStore = create<ModalStore>()(
   devtools(immer(modalStore), { name: "ModalStore" })
 );

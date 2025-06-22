@@ -2,7 +2,7 @@ import { create, StateCreator } from "zustand";
 import { InitialCartState } from "./types";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { Product } from "@/entities/product/model/types";
+import { Product } from "@/entities/product/@x/cart";
 
 interface IActions {
   addItemToCart: (item: Product) => void;

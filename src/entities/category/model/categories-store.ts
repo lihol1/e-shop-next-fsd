@@ -1,5 +1,4 @@
 import { create, StateCreator } from "zustand";
-
 import { data } from "@shared/lib";
 import { InitialCategoryState } from "./types";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
@@ -8,6 +7,8 @@ import { immer } from "zustand/middleware/immer";
 interface IActions {
     getCategories: () => void;
     getTenPopularCategories: () => void;
+    setCategoryId: (id: number) => void;
+    setCategoryName: (name: string) => void;
 }
 
 const initialState: InitialCategoryState = {
@@ -70,6 +71,23 @@ const categoriesStore: CategoryCreator = (set) => ({
             },
             false,
             "getPopularCategories"
+        ),
+
+    setCategoryId: (id) =>
+        set(
+            (state) => {
+                state.categoryId = id;
+            },
+            false,
+            "setCategoryId"
+        ),
+    setCategoryName: (name) =>
+        set(
+            (state) => {
+                state.categoryName = name;
+            },
+            false,
+            "setCategoryName"
         ),
 });
 

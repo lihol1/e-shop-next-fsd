@@ -21,5 +21,3 @@ export const CategoriesItem = memo(({ category }: CategoriesItemProps) => {
         </Link>
     );
 })
-
-// export default CategoriesItem;

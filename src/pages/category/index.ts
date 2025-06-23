@@ -1,3 +1,4 @@
-import  CategoryPage from "./ui/CategoryPage"
+import CategoryPage from "./ui/CategoryPage";
 
-export {CategoryPage}
+export { useCategoryPageStore} from "./model/categoryPage-store";
+export { CategoryPage };

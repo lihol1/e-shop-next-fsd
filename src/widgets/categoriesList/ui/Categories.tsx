@@ -7,7 +7,7 @@ import { Category } from "@entities/category";
 import { useEffect } from "react";
 import { getAllCategories, useCategoriesStore } from "@/entities/category";
 
-export default function Categories() {
+export default function CategoriesList() {
     const { renderList, getTenPopularCategories } = useCategoriesStore((state) => state);
 
     useEffect(() => {

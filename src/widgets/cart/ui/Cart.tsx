@@ -7,6 +7,7 @@ import { CartItem } from "@entities/cart";
 import { useCartStore } from "@/entities/cart";
 import { useModalStore } from "@/shared/model";
 import { useEffect } from "react";
+import { Product } from "@/entities/product";
 
 export default function Cart() {
     // const { orderedProducts, cartIsOpen } = useAppSelector((state) => state.cart);

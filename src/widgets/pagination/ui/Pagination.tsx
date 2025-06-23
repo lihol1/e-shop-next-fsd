@@ -3,14 +3,17 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { List } from "@shared/ui";
 import PaginationButton from "./PaginationButton";
 // import { setCurrentPage } from "../../store/generalSlice";
-import { useCategoryPageStore } from "@/pages/category/model/categoryPage-store";
+// import { useCategoryPageStore } from "@/pages/category/model/categoryPage-store";
+import { Dispatch, SetStateAction } from 'react';
 
 type PaginationProps = {
     totalPages: number;
+    currentPage: number;
+    setCurrentPage: Dispatch<SetStateAction<number>>
 };
 
-function Pagination({ totalPages }: PaginationProps) {
-    const {setCurrentPage} = useCategoryPageStore(state=> state)
+function Pagination({ totalPages, setCurrentPage }: PaginationProps) {
+    // const {setCurrentPage} = useCategoryPageStore(state=> state)
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);  
     // const [searchParams, setSearchParams] = useSearchParams();
     const searchParams = useSearchParams();
@@ -32,7 +35,7 @@ function Pagination({ totalPages }: PaginationProps) {
         <div className="category__pagination pagination">
             <List
                 items={pages}
-                renderItem={(page) => <PaginationButton page={page} handlePageChange={handlePageChange} />}
+                renderItem={(page) => <PaginationButton page={page} handlePageChange={handlePageChange} currentPage={currentPage}/>}
                 className="pagination"
             />
         </div>

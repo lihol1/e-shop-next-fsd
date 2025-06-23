@@ -6,17 +6,17 @@ import { faCartShopping, faRubleSign } from "@fortawesome/free-solid-svg-icons";
 // import { setIsShown } from "../../store/generalSlice";
 // import { useAppDispatch } from "../../hooks/hooks";
 // import { List } from "@shared/ui";
-import FeatureItem from "../../../entities/product/ui/FeatureItem";
+import { FeatureItem } from "@/entities/product";
 import { AddToCart } from "@/features/cart";
 import { useCartStore } from "@/entities/cart";
 import { Dispatch, SetStateAction } from "react";
 
 type CategoryPageItemProps = {
     product: Product;
-    setIsShown: Dispatch<SetStateAction<boolean>>
+    setIsShown: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ProductItem({ product, setIsShown }: CategoryPageItemProps) {
+export default function ProductCard({ product, setIsShown }: CategoryPageItemProps) {
     // const dispatch = useAppDispatch();
     const { addItemToCart } = useCartStore((state) => state);
 

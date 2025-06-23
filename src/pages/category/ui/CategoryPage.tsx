@@ -7,15 +7,16 @@ import { Toast } from "@widgets/toast";
 import { Sidebar } from "@widgets/sidebar";
 import { Pagination } from "@widgets/pagination";
 import { List } from "@shared/ui";
-import { ProductItem } from "@entities/product";
+import { ProductCard } from "@widgets/productCard";
 import { useFilterStore } from "@/features/filterProduct";
-import { ITEMS_PER_PAGE } from "../../../entities/category/lib/constants";
+import { ITEMS_PER_PAGE } from "@entities/category";
 import { useCategoryPageStore } from "../model/categoryPage-store";
 import { useCategoriesStore } from "@/entities/category";
-import { CategoryContent } from "@/widgets/categoryContent";
+// import { CategoryContent } from "@/widgets/categoryContent";
 
 export default function CategoryPage() {
-    const { currentPage, setCurrentPage } = useCategoryPageStore((state) => state);
+    // const { currentPage, setCurrentPage } = useCategoryPageStore((state) => state);
+    const [currentPage, setCurrentPage] = useState(1);
     const { getCategories, setCategoryId, setCategoryName, categoryList, categoryName } = useCategoriesStore(
         (state) => state
     );
@@ -44,6 +45,7 @@ export default function CategoryPage() {
 
     const searchParams = useSearchParams();
     const [list, setList] = useState<Product[] | null>([]);
+    const [isShown, setIsShown] = useState(false)
 
     const totalPages = list === null ? 1 : Math.ceil(list.length / ITEMS_PER_PAGE);
 
@@ -60,8 +62,8 @@ export default function CategoryPage() {
     }
 
     useEffect(() => {
-        const categoryId = params.categoryId ? +params.categoryId : -1;
-        const page = searchParams.get("page");
+        const categoryId = params?.categoryId ? +params.categoryId : -1;
+        const page = searchParams?.get("page");
         if (!page) {
             //заменяем запись в истории браузера
             window.history.replaceState({}, "", `/category/${categoryId}?page=1`);
@@ -134,20 +136,20 @@ export default function CategoryPage() {
         filterByCategory(params.categoryId ?? "");
     }, [params.categoryId]);
 
-    // function paginate(arr: Product[]) {
-    //     if (arr.length <= ITEMS_PER_PAGE) {
-    //         return arr;
-    //     } else {
-    //         const endIndex = currentPage * ITEMS_PER_PAGE;
-    //         const startIndex = endIndex - ITEMS_PER_PAGE;
-    //         return arr.slice(startIndex, endIndex);
-    //     }
-    // }
+    function paginate(arr: Product[]) {
+        if (arr.length <= ITEMS_PER_PAGE) {
+            return arr;
+        } else {
+            const endIndex = currentPage * ITEMS_PER_PAGE;
+            const startIndex = endIndex - ITEMS_PER_PAGE;
+            return arr.slice(startIndex, endIndex);
+        }
+    }
 
     return (
         <div className="page__wrapper">
-            <CategoryContent list={list}/>
-            {/* <div className="page__category category">
+            {/* <CategoryContent list={list}/> */}
+            <div className="page__category category">
                 <h3 className="category__title">
                     {categoryName.length > 0 && categoryName[0].toUpperCase() + categoryName.slice(1)}{" "}
                     {list && <span className="category__amount">{list?.length} товаров</span>}
@@ -158,15 +160,15 @@ export default function CategoryPage() {
                     <>
                         <List
                             items={paginate(list)}
-                            renderItem={(product: Product) => <ProductItem product={product} />}
+                            renderItem={(product: Product) => <ProductCard product={product} setIsShown={setIsShown}/>}
                             className="category"
                         />
 
-                        <Pagination totalPages={totalPages} />
+                        <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                     </>
                 )}
                 {isShown && <Toast />}
-            </div> */}
+            </div>
 
             <Sidebar />
         </div>

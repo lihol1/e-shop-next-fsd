@@ -1,13 +1,14 @@
-import { useCategoryPageStore } from "@/pages/category";
+// import { useCategoryPageStore } from "@/pages/category";
 
 type PaginationButtonProps = {
     page: number;
+    currentPage: number;
     handlePageChange: (page: number) => void;
 };
 
-export default function PaginationButton({ page, handlePageChange }: PaginationButtonProps) {
+export default function PaginationButton({ page, handlePageChange, currentPage }: PaginationButtonProps) {
     // const { currentPage } = useAppSelector(state=>state.general)
-    const { currentPage } = useCategoryPageStore((state) => state);
+    // const { currentPage } = useCategoryPageStore((state) => state);
     return (
         <button
             className={`pagination__button ${page === currentPage ? "active" : ""}`}

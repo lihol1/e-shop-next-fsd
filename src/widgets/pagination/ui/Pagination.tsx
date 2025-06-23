@@ -12,7 +12,7 @@ type PaginationProps = {
     setCurrentPage: Dispatch<SetStateAction<number>>
 };
 
-function Pagination({ totalPages, setCurrentPage }: PaginationProps) {
+function Pagination({ totalPages, currentPage, setCurrentPage }: PaginationProps) {
     // const {setCurrentPage} = useCategoryPageStore(state=> state)
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);  
     // const [searchParams, setSearchParams] = useSearchParams();
